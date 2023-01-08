@@ -1,13 +1,5 @@
-#	Devops Project
+#	Devops 
 
-## Deadline
-
-The evening of December 22, 2021.
-
-##	Author
-
-- Benjamin Hini
-- Dinh Bach Nguyen
 
 ##	Instructions
 
