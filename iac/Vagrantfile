@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    
+    if Vagrant.has_plugin?("vagrant-vbguest")
+        config.vm.provider :virtualbox do |vb|
+            config.vbguest.auto_update = false
+        end
+    end
+
+    config.vm.define "ubuntu-server" do |ubuntu|
+        ubuntu.vm.box = 'ubuntu/trusty64'
+        ubuntu.vm.network :private_network, ip: "20.20.20.2"
+
+        config.vm.provider "virtualbox" do |v|
+            v.name = 'devops'
+            v.memory = 2048
+            v.cpus = 1
+        end
+
+        config.vm.provider "vmware_desktop" do |vmware|
+            vmware.vmx["memsize"] = "2048"
+            vmware.vmx["numvcpus"] = "1"
+        end
+    end
+
+    config.vm.provision "ansible_local" do |ansible|
+        ansible.playbook = "ansible.yml"
+    end
+    config.vm.synced_folder "../userapi", "/home/devops/userapi"
+end

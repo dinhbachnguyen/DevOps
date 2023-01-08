@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/devops/userapi":{"guestpath":"/home/devops/userapi","hostpath":"C:/Users/benja/OneDrive/Documents/GitHub/devops project/userapi","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/benja/OneDrive/Documents/GitHub/devops project/iac","disabled":false,"__vagrantfile":true}}}

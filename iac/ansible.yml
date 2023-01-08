@@ -1,0 +1,70 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: redis source download
+      get_url:
+        url: http://download.redis.io/redis-stable.tar.gz 
+        dest: /home/devops
+    
+    - name: redis unarchive
+      ansible.builtin.unarchive:
+        src: /home/devops/redis-stable.tar.gz
+        dest: /home/devops
+    
+    - name: make install
+      command: 
+        chdir=/home/devops/redis-stable make install
+
+    # - name: 'install npm'
+    #   apt:
+    #     name: node
+    #     state: present
+    #     update_cache: yes
+      
+    - name: downloading n
+      get_url: 
+        url: https://raw.githubusercontent.com/tj/n/master/bin/n
+        dest: /home/devops/n
+
+    - name: selecting latest node
+      ansible.builtin.shell: bash n lts
+      args: 
+        chdir: /home/devops
+    
+    - name: installing n
+      ansible.builtin.shell: npm install -g n
+      args: 
+        chdir: /home/vagrant
+
+    - name: Launching Redis database
+      command: redis-server
+      async: 10000000
+      poll: 0
+
+    - name: npm install back end
+      ansible.builtin.shell: npm install
+      args:
+        chdir: /home/devops/userapi/back-end
+    
+    - name: npm test
+      ansible.builtin.shell: npm test
+      args:
+        chdir: /home/devops/userapi/back-end
+    
+    - name: Launching server
+      ansible.builtin.shell: npm start 
+      args: 
+        chdir: /home/devops/userapi/back-end
+      async: 10000000
+      poll: 0
+
+    - name: npm install front end
+      ansible.builtin.shell: npm install
+      args:
+        chdir: /home/devops/userapi/front-end
+    
+    - name: Launching front end
+      ansible.builtin.shell: npm start
+      args:
+        chdir: /home/devops/userapi/front-end
