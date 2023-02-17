@@ -5,7 +5,7 @@
 
 ###	1. Create a web application
 
-We created a basic CRUD applcation made of a back-end and a front-end.
+We created a basic CRUD application made of a back-end and a front-end.
 
 <img src="./images/userapi_organisation.PNG" alt="userapi_organisation" style="zoom:25%;" />
 
